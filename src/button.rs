@@ -1,6 +1,6 @@
 //! User button PC13
 
-use stm32f40x::{EXTI, GPIOC, RCC, SYSCFG};
+use stm32f407::{EXTI, GPIOC, RCC, SYSCFG};
 
 /// Button connected to pin PC13
 pub const BUTTON: PC13 = PC13;
@@ -13,7 +13,7 @@ pub fn init(gpioc: &GPIOC, rcc: &RCC, syscfg: &SYSCFG, exti: &EXTI) {
     // Enable GPIOC
     rcc.ahb1enr.modify(|_, w| w.gpiocen().set_bit());
     // Configure PC13 as input with pull-downs, RM0368 Table 23
-    gpioc.moder.modify(|_, w| unsafe { w.moder13().bits(0) });
+    gpioc.moder.modify(|_, w|  w.moder13().bits(0) );
     gpioc.pupdr.modify(|_, w| unsafe { w.pupdr13().bits(0b10) });
     // System configuration controller clock enable
     rcc.apb2enr.modify(|_, w| w.syscfgen().set_bit());

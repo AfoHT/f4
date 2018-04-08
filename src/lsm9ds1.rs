@@ -1,8 +1,8 @@
 //! Interfacing the LSM9DS1 3D accelerometer, gyroscope, and magnetometer
 //! using SPI.
 
-extern crate stm32f40x;
-use stm32f40x::{SPI1, SPI2, SPI3, GPIOA};
+extern crate stm32f407;
+use stm32f407::{SPI1, SPI2, SPI3, GPIOA};
 use spi::Spi;
 use prelude::*;
 use math_utils::Vector3;

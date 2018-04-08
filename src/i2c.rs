@@ -18,7 +18,7 @@ use core::any::{Any, TypeId};
 use core::ptr;
 
 use nb;
-use stm32f40x::{I2C1, I2C2, I2C3, GPIOA, GPIOB, RCC};
+use stm32f407::{I2C1, I2C2, I2C3, GPIOA, GPIOB, RCC};
 
 /// I2C result
 pub type Result<T> = ::core::result::Result<T, nb::Error<Error>>;
@@ -65,9 +65,9 @@ macro_rules! impl_I2c {
                         w.ospeedr8().bits(0b11)
                         .ospeedr9().bits(0b11)});
                     // Alternate function mode
-                    gpiob.moder.modify(|_, w| unsafe {
+                    gpiob.moder.modify(|_, w|
                         w.moder8().bits(2)
-                        .moder9().bits(2)});
+                        .moder9().bits(2));
                     // Alternate function open drain
                     gpiob.otyper.modify(|_, w|
                         w.ot8().set_bit()
@@ -94,9 +94,9 @@ macro_rules! impl_I2c {
                         w.ospeedr3().bits(0b11)
                         .ospeedr10().bits(0b11)});
                     // Alternate function mode
-                    gpiob.moder.modify(|_, w| unsafe {
+                    gpiob.moder.modify(|_, w|
                         w.moder3().bits(2)
-                        .moder10().bits(2)});
+                        .moder10().bits(2));
                     // Alternate function open drain
                     gpiob.otyper.modify(|_, w|
                         w.ot3().set_bit()
@@ -115,15 +115,15 @@ macro_rules! impl_I2c {
                     rcc.apb1enr.modify(|_, w| w.i2c3en().set_bit());
                     rcc.ahb1enr.modify(|_, w| w.gpioaen().set_bit().gpioben().set_bit());
                     // DM00102166 - Alternate function, Table 9
-                    gpioa.afrh.modify(|_, w| w.afrh8().bits(4));
+                    gpioa.afrh.modify(|_, w| unsafe { w.afrh8().bits(4)});
                     gpiob.afrl.modify(|_, w| unsafe {w.afrl4().bits(9)});
                     // RM0368 8.3 Table 23
                     // Highest output speed
-                    gpioa.ospeedr.modify(|_, w| w.ospeedr8().bits(0b11));
+                    gpioa.ospeedr.modify(|_, w| unsafe { w.ospeedr8().bits(0b11)});
                     gpiob.ospeedr.modify(|_, w| unsafe {w.ospeedr4().bits(0b11)});
                     // Alternate function mode
                     gpioa.moder.modify(|_, w| w.moder8().bits(2));
-                    gpiob.moder.modify(|_, w| unsafe {w.moder4().bits(2)});
+                    gpiob.moder.modify(|_, w| w.moder4().bits(2));
                     // Alternate function open drain
                     gpioa.otyper.modify(|_, w| w.ot8().set_bit());
                     gpiob.otyper.modify(|_, w| w.ot4().set_bit());

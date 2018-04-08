@@ -1,6 +1,6 @@
 //! Methods for trying a closure for a set number of clock cycles.
 
-use stm32f40x::DWT;
+use stm32f407::DWT;
 
 /// Try a mutable closure until it returns Ok or times out.
 pub fn try_mut_until<R, F>(dwt: &DWT, i: u32, mut f: F) -> Result<R, &'static str>

@@ -17,7 +17,7 @@ use cast::u16;
 use hal;
 use nb;
 use static_ref::Static;
-use stm32f40x::{gpioa, DMA1, USART2, usart6, GPIOA, RCC};
+use stm32f407::{gpioa, DMA1, USART2, usart6, GPIOA, RCC};
 
 use dma::{self, Buffer, Dma1Stream5, Dma1Stream6};
 
@@ -124,10 +124,10 @@ where
             // DM00102166
             // PA2 and PA3 is connected to USART2 TX and RX respectively
             // Alternate function AF7, Table 9
-            gpio.afrl.modify(|_, w| w.afrl2().bits(7).afrl3().bits(7));
+            gpio.afrl.modify(|_, w| unsafe { w.afrl2().bits(7).afrl3().bits(7)});
             // Highest output speed
             gpio.ospeedr
-                .modify(|_, w| w.ospeedr2().bits(0b11).ospeedr3().bits(0b11));
+                .modify(|_, w| unsafe { w.ospeedr2().bits(0b11).ospeedr3().bits(0b11)});
             // RM0368 8.3 Table 23
             gpio.moder
                 .modify(|_, w| w.moder2().bits(2).moder3().bits(2));

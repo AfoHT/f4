@@ -1,6 +1,6 @@
 //! Eight LEDs connected to PORTB
 
-use stm32f40x::{GPIOB, RCC};
+use stm32f407::{GPIOB, RCC};
 
 /// All the LEDs
 pub static LEDS: [Led; 8] = [
@@ -39,7 +39,7 @@ pub fn init(gpioa: &GPIOB, rcc: &RCC) {
     rcc.ahb1enr.modify(|_, w| w.gpioben().set_bit());
 
     // Configure pins 8-15 as outputs
-    gpioa.moder.modify(|_, w| unsafe {
+    gpioa.moder.modify(|_, w|
         w.moder2()
             .bits(1)
             .moder1()
@@ -56,5 +56,5 @@ pub fn init(gpioa: &GPIOB, rcc: &RCC) {
             .bits(1)
             .moder10()
             .bits(1)
-    });
+    );
 }

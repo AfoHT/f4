@@ -1,6 +1,6 @@
 //! System clocking
 
-use stm32f40x::{FLASH, RCC};
+use stm32f407::{FLASH, RCC};
 
 const HSI_FREQ: u32 = 16_000_000;
 

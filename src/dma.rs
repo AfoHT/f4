@@ -5,7 +5,7 @@ use core::marker::PhantomData;
 use core::ops;
 
 use nb;
-use stm32f40x::{DMA1, DMA2};
+use stm32f407::{DMA1, DMA2};
 
 /// DMA error
 #[derive(Debug)]

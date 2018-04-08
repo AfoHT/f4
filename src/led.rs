@@ -1,6 +1,6 @@
 //! User LED PA5
 
-use stm32f40x::{GPIOA, RCC};
+use stm32f407::{GPIOA, RCC};
 
 /// LED connected to pin PA5
 pub const LED: PA5 = PA5;

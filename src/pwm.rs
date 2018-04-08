@@ -36,7 +36,7 @@ use core::marker::Unsize;
 use cast::{u16, u32};
 use hal;
 use static_ref::Static;
-use stm32f40x::{DMA1, TIM1, TIM2, TIM3, TIM4, GPIOA, GPIOB, GPIOC, RCC};
+use stm32f407::{DMA1, TIM1, TIM2, TIM3, TIM4, GPIOA, GPIOB, GPIOC, RCC};
 
 use dma::{self, Buffer, Dma1Stream2};
 use timer::Channel;
@@ -125,19 +125,19 @@ macro_rules! impl_Pwm {
                     // CH4 = PA11 = alternate push-pull
                     match channel {
                         Channel::_1 => {
-                            gpioa.afrh.modify(|_, w|  w.afrh8().bits(1));
+                            gpioa.afrh.modify(|_, w| unsafe {  w.afrh8().bits(1)});
                             gpioa.moder.modify(|_, w| w.moder8().bits(2));
                         }
                         Channel::_2 => {
-                            gpioa.afrh.modify(|_, w|  w.afrh9().bits(1));
+                            gpioa.afrh.modify(|_, w| unsafe {   w.afrh9().bits(1)});
                             gpioa.moder.modify(|_, w| w.moder9().bits(2));
                         }
                         Channel::_3 => {
-                            gpioa.afrh.modify(|_, w|  w.afrh10().bits(1));
+                            gpioa.afrh.modify(|_, w| unsafe {  w.afrh10().bits(1)});
                             gpioa.moder.modify(|_, w| w.moder10().bits(2));
                         }
                         Channel::_4 => {
-                            gpioa.afrh.modify(|_, w|  w.afrh11().bits(1));
+                            gpioa.afrh.modify(|_, w| unsafe {  w.afrh11().bits(1)});
                             gpioa.moder.modify(|_, w| w.moder11().bits(2));
                         }
                     }
@@ -150,16 +150,16 @@ macro_rules! impl_Pwm {
                     // See datasheet DM00115249 Table 9. Alternate function mapping
                     match channel {
                         Channel::_1 => {
-                            gpioa.afrl.modify(|_, w| w.afrl0().bits(1));
+                            gpioa.afrl.modify(|_, w| unsafe { w.afrl0().bits(1)});
                             gpioa.moder.modify(|_, w| w.moder0().bits(2));
                         }
                         Channel::_2 => {
-                            gpioa.afrl.modify(|_, w| w.afrl1().bits(1));
+                            gpioa.afrl.modify(|_, w| unsafe { w.afrl1().bits(1)});
                             gpioa.moder.modify(|_, w| w.moder1().bits(2));
                         }
                         Channel::_3 => {
                             gpiob.afrh.modify(|_, w| unsafe {w.afrh10().bits(1)});
-                            gpiob.moder.modify(|_, w| unsafe {w.moder10().bits(2)});
+                            gpiob.moder.modify(|_, w| w.moder10().bits(2));
                         }
                         Channel::_4 => {
                             unimplemented!()
@@ -172,20 +172,20 @@ macro_rules! impl_Pwm {
                     // CH4 = PB1 = alternate push-pull
                     match channel {
                         Channel::_1 => {
-                            gpioa.afrl.modify(|_, w| w.afrl6().bits(2));
+                            gpioa.afrl.modify(|_, w| unsafe { w.afrl6().bits(2)});
                             gpioa.moder.modify(|_, w| w.moder6().bits(2));
                         }
                         Channel::_2 => {
                             gpioc.afrl.modify(|_, w|  unsafe {w.afrl7().bits(2)});
-                            gpioc.moder.modify(|_, w| unsafe {w.moder7().bits(2)});
+                            gpioc.moder.modify(|_, w| w.moder7().bits(2));
                         }
                         Channel::_3 => {
                             gpiob.afrl.modify(|_, w| unsafe {w.afrl0().bits(2)});
-                            gpiob.moder.modify(|_, w| unsafe {w.moder0().bits(2)});
+                            gpiob.moder.modify(|_, w| w.moder0().bits(2));
                         }
                         Channel::_4 => {
                             gpiob.afrl.modify(|_, w| unsafe {w.afrl1().bits(2)});
-                            gpiob.moder.modify(|_, w| unsafe {w.moder1().bits(2)});
+                            gpiob.moder.modify(|_, w| w.moder1().bits(2));
                         }
                     }
 
@@ -197,19 +197,19 @@ macro_rules! impl_Pwm {
                     match channel {
                         Channel::_1 => {
                             gpiob.afrl.modify(|_, w|  unsafe {w.afrl6().bits(2)});
-                            gpiob.moder.modify(|_, w| unsafe {w.moder6().bits(2)});
+                            gpiob.moder.modify(|_, w| w.moder6().bits(2));
                         }
                         Channel::_2 => {
                             gpiob.afrl.modify(|_, w|  unsafe {w.afrl7().bits(2)});
-                            gpiob.moder.modify(|_, w| unsafe {w.moder7().bits(2)});
+                            gpiob.moder.modify(|_, w| w.moder7().bits(2));
                         }
                         Channel::_3 => {
                             gpiob.afrh.modify(|_, w|  unsafe {w.afrh8().bits(2)});
-                            gpiob.moder.modify(|_, w| unsafe {w.moder8().bits(2)});
+                            gpiob.moder.modify(|_, w| w.moder8().bits(2));
                         }
                         Channel::_4 => {
                             gpiob.afrh.modify(|_, w|  unsafe {w.afrh9().bits(2)});
-                            gpiob.moder.modify(|_, w| unsafe {w.moder9().bits(2)});
+                            gpiob.moder.modify(|_, w| w.moder9().bits(2));
                         }
                     }
                 }

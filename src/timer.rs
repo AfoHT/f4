@@ -5,7 +5,7 @@ use core::any::{Any, TypeId};
 use cast::{u16, u32};
 use hal;
 use nb::{self, Error};
-use stm32f40x::{TIM1, TIM10, TIM11, TIM2, TIM3, TIM4, TIM5, TIM9, RCC};
+use stm32f407::{TIM1, TIM10, TIM11, TIM2, TIM3, TIM4, TIM5, TIM9, RCC};
 
 /// Channel associated to a timer
 #[derive(Clone, Copy, Debug)]
